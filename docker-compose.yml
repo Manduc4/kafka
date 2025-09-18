@@ -1,0 +1,25 @@
+services:
+  kafka: 
+    image: bitnami/kafka:latest
+    restart: on-failure
+    ports:
+      - "9092:9092"
+
+  producer:
+    container_name: producer
+    build: 
+      context: .
+      dockerfile: Dockerfile.producer
+    depends_on:
+      - kafka
+
+  consumer:
+    container_name: consumer
+    build: 
+      context: .
+      dockerfile: Dockerfile.consumer
+    depends_on:
+      - kafka 
+      
+    
+  
